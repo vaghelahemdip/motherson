@@ -1,0 +1,89 @@
+<div class="datatable">
+    <h2>Users</h2>
+
+    <!-- Dropdown for filtering by part name -->
+    <div>
+        <div class="dropdown">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ selectedPart || 'Select Part Name' }}
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" (click)="selectPart(null)">Show All</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('BAL-SEAL')">BAL-SEAL</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('BLOCK B GUIDE')">BLOCK B GUIDE</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('JOINT NUT')">JOINT NUT</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('MIXING CHAMBER FIVE - BLADE')">MIXING CHAMBER FIVE -
+                        BLADE</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('RATIOPIN')">RATIOPIN</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('8 Tube')">8 Tube</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('8.0 Female adaptor')">8.0 Female adaptor</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('8.0 Male Adaptor')">8.0 Male Adaptor</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('8.0 v Packing')">8.0 v Packing</a></li>
+                <li><a class="dropdown-item" (click)="selectPart('Ball seal (Spring Housing)')">Ball seal (Spring
+                        Housing)</a></li>
+            </ul>
+
+        </div>
+    </div>
+    <br>
+
+    <!-- Search input -->
+    <div class="search-container">
+        <input type="text" [(ngModel)]="searchQuery" placeholder="Search here..." class="search-bar" />
+
+    </div>
+
+    <br><br>
+
+    <!-- Table headers with sort functionality and icons -->
+    <div class="row head">
+        <div class="reverse" (click)="sortTable('name')">
+            <label for="reverse">Part Name
+                <i class="fa" [ngClass]="getSortIcon('name')"></i></label>
+        </div>
+        <div class="reverse" (click)="sortTable('code')">
+            <label for="reverse">Part Code
+                <i class="fa" [ngClass]="getSortIcon('code')"></i></label>
+        </div>
+        <div class="reverse" (click)="sortTable('make')">
+            <label for="reverse">Category
+                <i class="fa" [ngClass]="getSortIcon('make')"></i></label>
+        </div>
+        <div class="type" (click)="sortTable('min')">
+            <label for="type">Min
+                <i class="fa" [ngClass]="getSortIcon('min')"></i></label>
+        </div>
+        <div class="type" (click)="sortTable('max')">
+            <label for="type">Max
+                <i class="fa" [ngClass]="getSortIcon('max')"></i></label>
+        </div>
+        <div class="type" (click)="sortTable('quantity')">
+            <label for="type">Closing Stock
+                <i class="fa" [ngClass]="getSortIcon('quantity')"></i></label>
+        </div>
+        <div class="type" (click)="sortTable('location')">
+            <label for="type">Location
+                <i class="fa" [ngClass]="getSortIcon('location')"></i></label>
+        </div>
+    </div>
+
+    <!-- Table content filtered, sorted, and paginated -->
+    <div class="content">
+        <div class="row science" *ngFor="let part of paginatedParts()">
+            <div>{{ part.name }}</div>
+            <div>{{ part.code }}</div>
+            <div>{{ part.make }}</div>
+            <div>{{ part.min }}</div>
+            <div>{{ part.max }}</div>
+            <div>{{ part.quantity }}</div>
+            <div>{{ part.location }}</div>
+        </div>
+    </div>
+
+    <!-- Pagination controls -->
+    <div class="pagination">
+        <button (click)="changePage(page - 1)" [disabled]="page <= 1">Previous</button>
+        <span>Page {{ page }} of {{ totalPages() }}</span>
+        <button (click)="changePage(page + 1)" [disabled]="page >= totalPages()">Next</button>
+    </div>
+</div>
